@@ -1,0 +1,7 @@
+no	Name	Email	marks1	marks2	marks3
+1	m	m@gmail.com	4	5	6
+2	n	n@gmail.com	4	6	6
+3	n	nn@gmail.com	5	6	7
+1	megha	m@gmail.com	5	6	7
+2	malay	m#gmail.com	5	6	7
+3	nilay	n@gmail.com	3	4	5
