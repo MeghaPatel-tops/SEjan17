@@ -76,3 +76,46 @@ SELECT * FROM employee WHERE EmployeeID =id
 SET @p0='9'; CALL `getEmpById`(@p0);
 
 // CALL `getEmpById`(6)
+
+
+============trigger==========================
+CREATE TRIGGER empTrigger
+AFTER UPDATE ON employee
+FOR EACH ROW
+INSERT INTO emplog(empid,timeof)VALUES(old.EmployeeID,now())
+
+
+START TRANSACTION;
+DELETE FROM employee where employeeId=13;
+COMMIT;
+
+START TRANSACTION;
+DELETE FROM employee where employeeId=12;
+ROLLBACK;
+
+
+START TRANSACTION;
+UPDATE employee set name="sitesh" where employeeId=12;
+ROLLBACK;
+
+
+
+=============================================
+START TRANSACTION;
+
+INSERT INTO student(studentId,studentName,email)VALUES(11,"vishal","vishal@gmail.com");
+
+SAVEPOINT sp1;
+
+UPDATE student set studentName="veer" where studentId=4;
+
+
+SAVEPOINT sp2;
+
+DELETE FROM student where studentId=11;
+
+
+ROLLBACK  to sp2;
+
+COMMIT;
+
