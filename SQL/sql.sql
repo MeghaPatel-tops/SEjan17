@@ -119,3 +119,36 @@ ROLLBACK  to sp2;
 
 COMMIT;
 
+======================
+
+
+
+
+
+DELIMITER $$
+
+CREATE PROCEDURE cursorExample()
+BEGIN
+    DECLARE id INT;
+    DECLARE empSalary FLOAT;
+    DECLARE is_done INT DEFAULT 0;
+
+    DECLARE empSalaryChange CURSOR FOR SELECT EmployeeID, Salary FROM employee;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET is_done = 1;
+
+    OPEN empSalaryChange;
+
+    get_emp: LOOP
+        FETCH empSalaryChange INTO id, empSalary;
+
+        IF is_done = 1 THEN
+            LEAVE get_emp;
+        END IF;
+
+        UPDATE employee SET Salary = empSalary * 1.1 WHERE EmployeeID = id;
+    END LOOP get_emp;
+
+    CLOSE empSalaryChange;
+END$$
+
+DELIMITER ;
